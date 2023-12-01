@@ -18,13 +18,13 @@ queue<Thread*> Thread::ready_;
 void
 Thread::thread_start(Thread *t)
 {
-    // Replace the line below with a real implementation
+    t->my_func();
     while (1) {}
 }
 
-Thread::Thread(function<void()> main)
+Thread::Thread(function<void()> main) : my_func(main)
 {
-    // You have to implement this
+    cur_stack = new Stack(Thread::thread_start, this);
 }
 
 Thread *
@@ -37,14 +37,17 @@ Thread::current()
 void
 Thread::schedule()
 {
-    // You have to implement this
+    Thread::ready_.push(this);
+    
 }
 
 void
 Thread::redispatch()
 {
     assert(!intr_enabled());
-    // You have to implement this
+    Thread *new_thread = Thread::ready_.front();
+    Thread::ready_.pop();
+    stack_switch(nullptr, new_thread->cur_stack);
 }
 
 void
