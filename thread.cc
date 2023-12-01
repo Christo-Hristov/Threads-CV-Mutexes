@@ -25,6 +25,7 @@ Thread::thread_start(Thread *t)
 Thread::Thread(function<void()> main) : my_func(main)
 {
     cur_stack = new Stack(Thread::thread_start, this);
+    Thread::ready_.push(this);
 }
 
 Thread *
@@ -45,6 +46,9 @@ void
 Thread::redispatch()
 {
     assert(!intr_enabled());
+    if (Thread::ready_.empty()) {
+        std::exit(0);
+    }
     Thread *new_thread = Thread::ready_.front();
     Thread::ready_.pop();
     stack_switch(nullptr, new_thread->cur_stack);
