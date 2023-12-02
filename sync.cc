@@ -41,7 +41,7 @@ Mutex::unlock()
     // if no threads are waiting on mutex
     if (blocked.empty()) {
         locked = 0; // set mutex to unlocked
-        cur_owner = nullptr; // might need to change
+        cur_owner = nullptr; // no one owns mutex anymore
     // if threads are waiting on mutex
     } else {
         cur_owner = blocked.front(); // set current owner to next thread that wil have mutex
@@ -64,35 +64,37 @@ Condition::Condition()
 void
 Condition::wait(Mutex &m)
 {
-    IntrGuard ig;
+    IntrGuard ig; // disable interrupts while changing global variables
     if (!m.mine()) {
         cerr << "Condition::wait must be called with mutex locked"
                 << endl;
         abort();
     }
-    m.unlock();
-    blocked.push(Thread::current());
-    Thread::redispatch();
-    m.lock();
+    m.unlock(); // release mutex while thread waits
+    blocked.push(Thread::current()); // add thread to queue of waiting threads
+    Thread::redispatch(); // switch out from thread 
+    m.lock(); // when we context switch back to wait after notify, try to reacquire lock
 }
 
 void
 Condition::notify_one()
 {
-    IntrGuard ig;
+    IntrGuard ig; // disable interrupts
+    // if there are any waiting threads
     if (!blocked.empty()){
-        blocked.front()->schedule();
-        blocked.pop();
+        blocked.front()->schedule(); // add thread to ready queue
+        blocked.pop(); // remove from waiting queue
     }
 }
 
 void
 Condition::notify_all()
 {
-    IntrGuard ig;
+    IntrGuard ig; // disable interrupts
+    // while there are still threads waiting
     while (!blocked.empty()) {
-        blocked.front()->schedule();
-        blocked.pop();
+        blocked.front()->schedule(); // add thread to ready queue
+        blocked.pop(); // remove thread from waiting queue
     }
     
 }

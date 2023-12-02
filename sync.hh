@@ -57,6 +57,6 @@ public:
 
 private:
     // You must define appropriate variables for this object
-    std::queue<Thread*> blocked;
+    std::queue<Thread*> blocked; // queue to keep track of threads waiting
 
 };
