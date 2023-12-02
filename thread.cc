@@ -53,17 +53,18 @@ Thread::redispatch()
     Thread *new_thread = Thread::ready_.front();
     Thread::ready_.pop();
     if (Thread::current() == nullptr) {
+        Thread::cur_thread = new_thread;
         stack_switch(nullptr, new_thread->cur_stack);
     } else {
+        Thread::cur_thread = new_thread;
         stack_switch(Thread::current()->cur_stack, new_thread->cur_stack);
     }
-    Thread::cur_thread = new_thread;
 }
 
 void
 Thread::yield()
 {
-    Thread::current()->schedule();
+    Thread::current()->schedule(); // check cur_thread
     Thread::redispatch();
 }
 
