@@ -28,7 +28,10 @@ public:
     Mutex &operator=(const Mutex &) = delete;
 
 private:
-    // You must define appropriate variables for this object
+    int locked;
+    std::queue<Thread*> blocked;
+    Thread *cur_owner;
+    
 };
 
 // A condition variable; methods are similar to std::condition_variable_any

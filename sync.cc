@@ -7,18 +7,26 @@ using namespace std;
 
 Mutex::Mutex()
 {
-    // Fill in code here, if needed.
+    locked = 0;
+    cur_owner = nullptr;
 }
 
 void
 Mutex::lock()
 {
+    IntrGuard ig;
     if (mine()) {
         cerr << "locking mutex already locked by this thread" << endl;
         abort();
     }
-
-    // You need to implement the rest of this function
+    
+    if (!locked) {
+        locked = 1;
+        cur_owner = Thread::current();
+    } else {
+        blocked.push(Thread::current());
+        Thread::redispatch();
+    }
 }
 
 void
@@ -29,7 +37,13 @@ Mutex::unlock()
         abort();
     }
 
-    // You need to implement the rest of this function
+    if (blocked.empty()) {
+        locked = 0;
+    } else {
+        cur_owner = blocked.front();
+        blocked.front()->schedule();
+        blocked.pop();
+    }
 }
 
 bool
