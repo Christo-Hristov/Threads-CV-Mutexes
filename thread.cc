@@ -56,8 +56,9 @@ Thread::redispatch()
         Thread::cur_thread = new_thread;
         stack_switch(nullptr, new_thread->cur_stack);
     } else {
+        Thread *temp = Thread::current();
         Thread::cur_thread = new_thread;
-        stack_switch(Thread::current()->cur_stack, new_thread->cur_stack);
+        stack_switch(temp->cur_stack, new_thread->cur_stack);
     }
 }
 
