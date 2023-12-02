@@ -47,6 +47,9 @@ public:
     // be non-preemptive (threads run until they either yield or exit).
     static void preempt_init(std::uint64_t usec = 100'000);
 
+    //
+    static void handler();
+
 private:
     // A list of threads that are ready to execute. The "static" keyword
     // means that there is only a single instance of this variable, which

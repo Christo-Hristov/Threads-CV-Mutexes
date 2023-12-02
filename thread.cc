@@ -21,6 +21,7 @@ Stack* Thread::last_deleted = nullptr;
 void
 Thread::thread_start(Thread *t)
 {
+    intr_enable(true);
     t->my_func();
     Thread::exit();
 }
@@ -40,6 +41,7 @@ Thread::current()
 void
 Thread::schedule()
 {
+    IntrGuard ig;
     Thread::ready_.push(this);
     
 }
@@ -47,6 +49,7 @@ Thread::schedule()
 void
 Thread::redispatch()
 {
+    IntrGuard ig;
     assert(!intr_enabled());
     if (Thread::ready_.empty()) {
         std::exit(0);
@@ -66,14 +69,15 @@ Thread::redispatch()
 void
 Thread::yield()
 {
-    Thread::current()->schedule(); // check cur_thread
+    IntrGuard ig;
+    Thread::current()->schedule(); 
     Thread::redispatch();
 }
 
 void
 Thread::exit()
 {
-    // You have to implement this
+    IntrGuard ig;
     if (last_deleted != nullptr) {
         delete last_deleted;
     }
@@ -92,7 +96,13 @@ Thread::exit()
 }
 
 void
+Thread::handler()
+{
+    Thread::yield();
+}
+
+void
 Thread::preempt_init(uint64_t usec)
 {
-    // You have to implement this
+    timer_init(usec, Thread::handler); // might have to take out parenthesis
 }
