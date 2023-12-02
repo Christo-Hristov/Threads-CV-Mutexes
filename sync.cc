@@ -32,6 +32,7 @@ Mutex::lock()
 void
 Mutex::unlock()
 {
+    IntrGuard ig;
     if (!mine()) {
         cerr << "unlocking mutex not held by this thread" << endl;
         abort();
@@ -49,8 +50,7 @@ Mutex::unlock()
 bool
 Mutex::mine()
 {
-    // Replace the code below with your implementation.
-    return true;
+    return (Thread::current() == cur_owner);
 }
 
 Condition::Condition()
