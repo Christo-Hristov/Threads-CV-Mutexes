@@ -65,7 +65,7 @@ private:
     [[noreturn]] static void thread_start(Thread *t);
 
     // Fill in other fields and/or methods that you need.
-    static Thread *last_deleted;
+    static Stack *last_deleted;
     static Thread *cur_thread; // pointer to the current running thread
     Stack *cur_stack; // pointer to the stack which contains thread info
     std::function<void()> my_func; // function the thread will execute

@@ -16,7 +16,7 @@ using namespace std;
 queue<Thread*> Thread::ready_;
 
 Thread* Thread::cur_thread = nullptr;
-Thread* Thread::last_deleted = nullptr;
+Stack* Thread::last_deleted = nullptr;
 
 void
 Thread::thread_start(Thread *t)
@@ -77,7 +77,9 @@ Thread::exit()
     if (last_deleted != nullptr) {
         delete last_deleted;
     }
-    last_deleted = Thread::current();
+    
+    last_deleted = Thread::current()->cur_stack;
+    delete Thread::current();
     Thread::cur_thread = nullptr;
     Thread::redispatch();
     
