@@ -22,7 +22,7 @@ void
 Thread::thread_start(Thread *t)
 {
     t->my_func();
-    while (1) {}
+    Thread::exit();
 }
 
 Thread::Thread(function<void()> main) : my_func(main)
