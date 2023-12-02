@@ -15,6 +15,8 @@ using namespace std;
 // a method in a header file doesn't create code for the method).
 queue<Thread*> Thread::ready_;
 
+Thread* Thread::cur_thread = nullptr;
+
 void
 Thread::thread_start(Thread *t)
 {
@@ -31,8 +33,7 @@ Thread::Thread(function<void()> main) : my_func(main)
 Thread *
 Thread::current()
 {
-    // Replace the code below with your implementation.
-    return nullptr;
+    return Thread::cur_thread;
 }
 
 void
@@ -51,13 +52,19 @@ Thread::redispatch()
     }
     Thread *new_thread = Thread::ready_.front();
     Thread::ready_.pop();
-    stack_switch(nullptr, new_thread->cur_stack);
+    if (Thread::current() == nullptr) {
+        stack_switch(nullptr, new_thread->cur_stack);
+    } else {
+        stack_switch(Thread::current()->cur_stack, new_thread->cur_stack);
+    }
+    Thread::cur_thread = new_thread;
 }
 
 void
 Thread::yield()
 {
-    // You have to implement this
+    Thread::current()->schedule();
+    Thread::current()->redispatch();
 }
 
 void
