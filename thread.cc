@@ -75,7 +75,7 @@ Thread::exit()
 {
     // You have to implement this
     if (last_deleted != nullptr) {
-        delete last_deleted->cur_stack;
+        delete last_deleted;
     }
     last_deleted = Thread::current();
     Thread::cur_thread = nullptr;
