@@ -28,9 +28,9 @@ public:
     Mutex &operator=(const Mutex &) = delete;
 
 private:
-    int locked;
-    std::queue<Thread*> blocked;
-    Thread *cur_owner;
+    int locked; // value to keep track of it mutex is locked
+    std::queue<Thread*> blocked; // queue of blocked threads
+    Thread *cur_owner; // pointer to current owner of mutex
     
 };
 
@@ -57,4 +57,6 @@ public:
 
 private:
     // You must define appropriate variables for this object
+    std::queue<Thread*> blocked;
+
 };
