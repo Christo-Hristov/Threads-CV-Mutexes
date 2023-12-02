@@ -16,6 +16,7 @@ using namespace std;
 queue<Thread*> Thread::ready_;
 
 Thread* Thread::cur_thread = nullptr;
+Thread* Thread::last_deleted = nullptr;
 
 void
 Thread::thread_start(Thread *t)
@@ -73,9 +74,17 @@ void
 Thread::exit()
 {
     // You have to implement this
+    if (last_deleted != nullptr) {
+        delete last_deleted->cur_stack;
+    }
+    last_deleted = Thread::current();
+    Thread::cur_thread = nullptr;
+    Thread::redispatch();
+    
 
     // Your code above should clean up the thread such that control never
     // reaches here (this method should never return).
+    
     cerr << "Thread::exit() tried to return" << endl;
     abort();
 }
