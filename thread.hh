@@ -46,8 +46,9 @@ public:
     // If this method is not called, then your dispatcher should 
     // be non-preemptive (threads run until they either yield or exit).
     static void preempt_init(std::uint64_t usec = 100'000);
-
-    //
+ 
+    // Adds current thread to the back of the ready queue and switches to
+    // to running next ready thread, once the timer fires.
     static void handler();
 
 private:
@@ -68,7 +69,7 @@ private:
     [[noreturn]] static void thread_start(Thread *t);
 
     // Fill in other fields and/or methods that you need.
-    static Stack *last_deleted;
+    static Stack *last_deleted; // pointer to stack of previoiusly deleted thread
     static Thread *cur_thread; // pointer to the current running thread
     Stack *cur_stack; // pointer to the stack which contains thread info
     std::function<void()> my_func; // function the thread will execute
