@@ -64,7 +64,7 @@ void
 Thread::yield()
 {
     Thread::current()->schedule();
-    Thread::current()->redispatch();
+    Thread::redispatch();
 }
 
 void
