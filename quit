@@ -1,0 +1,38 @@
+Loading /etc/emacs/site-start.d/00debian.el (source)...done
+Loading /etc/emacs/site-start.d/50asymptote.el (source)...done
+Loading /etc/emacs/site-start.d/50autoconf.el (source)...done
+Loading /etc/emacs/site-start.d/50cmake-data.el (source)...done
+Loading /etc/emacs/site-start.d/50dictionaries-common.el (source)...
+Loading debian-ispell...
+Loading /var/cache/dictionaries-common/emacsen-ispell-default.el (source)...done
+Loading debian-ispell...done
+Loading /var/cache/dictionaries-common/emacsen-ispell-dicts.el (source)...done
+Loading /etc/emacs/site-start.d/50dictionaries-common.el (source)...done
+Loading /etc/emacs/site-start.d/50gcl.el (source)...done
+Loading /etc/emacs/site-start.d/50latex-cjk-common.el (source)...
+Loading /usr/share/emacs/site-lisp/latex-cjk-common/cjk-enc.el (source)...done
+Loading /etc/emacs/site-start.d/50latex-cjk-common.el (source)...done
+Loading /etc/emacs/site-start.d/50latex-cjk-thai.el (source)...done
+Loading /etc/emacs/site-start.d/50latexmk.el (source)...done
+Loading /etc/emacs/site-start.d/50tcsh.el (source)...done
+Loading /etc/emacs/site-start.d/50texlive-lang-english.el (source)...done
+For information about GNU Emacs and the GNU system, type C-h C-a.
+mwheel-scroll: Beginning of buffer [10 times]
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+mwheel-scroll: Beginning of buffer [17 times]
+Saving file /afs/.ir/users/c/h/christoh/CS111/assign5/thread.hh...
+Wrote /afs/.ir/users/c/h/christoh/CS111/assign5/thread.hh
+(No changes need to be saved)
+Auto-saving...done
+Saving file /afs/.ir/users/c/h/christoh/CS111/assign5/thread.hh...
+Wrote /afs/.ir/users/c/h/christoh/CS111/assign5/thread.hh
+(No changes need to be saved)
+mwheel-scroll: End of buffer [3 times]
+mwheel-scroll: Beginning of buffer [31 times]
+Mark set
+Saving file /afs/.ir/users/c/h/christoh/CS111/assign5/thread.hh...
+Wrote /afs/.ir/users/c/h/christoh/CS111/assign5/thread.hh
+(No changes need to be saved)
+completing-read-default: Command attempted to use minibuffer while in minibuffer [2 times]
